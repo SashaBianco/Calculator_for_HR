@@ -1,0 +1,15 @@
+.container {
+    display: none;
+}
+
+.container_visible {
+    display: block;
+}
+
+.container_error {
+    display: none;
+}
+
+.container_error_visivle {
+    display: block;
+}

@@ -1,42 +1,46 @@
 <hmtl>
-    <script src="getCountInvite.js"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="style.css">
     <body>
-        <form>
-            <div class="form-example">
-            <label for="name">Введи количество проведенных собеседований: </label>
-            <input type="text" name="interview" id="interview" value='0' required />
-            <div class="form-example">
-            <label for="name">Введи количество приглашенных людей по итогам собеседований: </label>
-            <input type="text" name="invite" id="invite" value='0' required />
-            <div class="form-example">
-            <label for="name">Введи количество прошедших службу безопасности: </label>
-            <input type="text" name="security" id="security" value='0' required />
-            <div class="form-example">
-            <label for="name">Введи количество дошедших до тестового дня: </label>
-            <input type="text" name="income" id="income" value='0' required />
-            <div class="form-example">
-            <label for="name">Введи количество ожидаемых: </label>
-            <input type="text" name="waiting" id="waiting" value='0' required /> 
-            <button onclick="getValuesFromForm()">Рассчитать</button>
+        <form class="container_form">
+            <div class="container_form_item">
+                <input type="text" class="edit" name="interview" id="interview" placeholder="Введи количество проведенных собеседований" required />
+                <label for="name" class="label">количество собеседований</label>
+            </div>
+            <div class="container_form_item">
+                <input type="text" class="edit" name="invite" id="invite" placeholder="Введи количество приглашенных по итогам собеседований" required />
+                <label for="name" class="label">количество приглашенных</label>
+            </div>
+            <div class="container_form_item">
+                <input type="text" class="edit" name="security" id="security" placeholder="Введи количество прошедших службу безопасности" required />
+                <label for="name" class="label">количество прошедших СБ</label>
+            </div>
+            <div class="container_form_item">
+                <input type="text" class="edit" name="income" id="income" placeholder="Введи количество дошедших до тестового дня" required />
+                <label for="name" class="label">количество дошедших до тестового дня</label>
+            </div>
+            <div class="container_form_item">
+                <input type="text" class="edit" name="waiting" id="waiting" placeholder="Введи количество ожидаемых" required />
+                <label for="name" class="label">количество ожидаемых</label>
+            </div>
+            <button class="button" onclick="getValuesFromForm()">Рассчитать</button>
         </form>
-        <br><br><br>
-        <div class="container_values">
 
-        </div>
+        <div class="container_values"> </div>
         <div class="container_error">
-        <div> Не заполнены все данные!!!</div>
+            <div>Не заполнены все поля!</div>
         </div>
     
         <div class="container">
-            <h2>Для выхода на отсечку по доходимости нужно:</h2>
-            <div class="div_arrayCutoffYield"></div>
-            <h2>Для выхода на план по доходимости нужно:</h2>
-            <div class="div_arrayNormYield"></div>
-            <h2>Для выхода на отсечку по приглашаемости нужно:</h2>
-            <div class="div_arrayCutoffInvite"></div>
-            <h2>Для выхода на план по приглашаемости нужно:</h2>
-            <div class="div_arrayNormInvite"></div>
+            <h3>Для выхода на отсечку по доходимости нужно:</h3>
+            <div class="div_arrayCutoffYield div_result"></div>
+            <h3>Для выхода на план по доходимости нужно:</h3>
+            <div class="div_arrayNormYield div_result"></div>
+            <h3>Для выхода на отсечку по приглашаемости нужно:</h3>
+            <div class="div_arrayCutoffInvite div_result"></div>
+            <h3>Для выхода на план по приглашаемости нужно:</h3>
+            <div class="div_arrayNormInvite div_result"></div>
         </div>
     </body>
+    <script src="getCountInvite.js"></script>
 </hmtl>

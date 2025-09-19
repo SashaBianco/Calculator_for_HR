@@ -14,7 +14,6 @@ function getValuesFromForm () {
     countWaiting = parseInt(document.getElementById('waiting').value) //кол-во ожидаемых
 
 
-    
     if (isNaN(countInterwiew) || isNaN(countInvite) || isNaN(countPaccedSecurity)  || isNaN(countIncome)  || isNaN(countWaiting))  {
         console.log('Ошибка. Не заполнены все поля!')
         document.getElementsByClassName('container')[0].classList.remove('container_visible')
@@ -25,52 +24,87 @@ function getValuesFromForm () {
         let arrayNormYieldNonWaiting = getNeedValuesYield(countInterwiew, countInvite, countPaccedSecurity, countIncome, 0, normIncome) //отсечка доходимости без дошедших
         let arrayCutoffInvite = getNeedValuesInvite(countInterwiew, countInvite, cutoffInvite) //отсечка приглашаемости
         let arrayNormInvite = getNeedValuesInvite(countInterwiew, countInvite, normInvite) //норма приглашаемости 
-        
-        let temple1 = `<ul>
-            Чтобы получился процент: <b>${arrayCutoffYieldNonWaiting[3] * 100}%:</b><br><br>
-            <li> Провести собеседований: <b>${arrayCutoffYield[0] - countInterwiew}</b> </li>
-            <li> Пригласить дальше: <b>${arrayCutoffYield[1] - countInvite}</b> кандидата/кандидатов</li>
-            <li> Чтобы прошли СБ: <b>${arrayCutoffYield[2] - countPaccedSecurity}</b> кандидата/кандидатов</li>
-            <li> Чтобы дошли ожидаемые: <b>${countWaiting}</b> кандидата/кандидатов</li>
-            <br>или<br><br>
-            Чтобы получился процент: <b>${arrayCutoffYield[3] * 100}%: </b><br><br>
-            <li> Провести собеседований: <b>${arrayCutoffYieldNonWaiting[0] - countInterwiew}</b> </li>
-            <li> Пригласить дальше: <b>${arrayCutoffYieldNonWaiting[1] - countInvite}</b> кандидата/кандидатов</li>
-            <li> Чтобы <b>${arrayCutoffYieldNonWaiting[2] - countPaccedSecurity}</b> кандидата/кандидатов прошли СБ.</li>
-            
-        </ul>`
-        let temple2 = `<ul>
-            Чтобы получился процент: <b>${arrayNormYieldNonWaiting[3] * 100}%:</b><br><br>
-            <li> Провести собеседований: <b>${arrayNormYield[0] - countInterwiew}</b> </li>
-            <li> Пригласить дальше: <b>${arrayNormYield[1] - countInvite}</b> кандидата/кандидатов</li>
-            <li> Чтобы <b>${arrayNormYield[2] - countPaccedSecurity}</b> кандидата/кандидатов прошли СБ</li>
-            <li> Чтобы дошли ожидаемые: <b>${countWaiting}</b> кандидата/кандидатов</li>
-            <br>или<br><br>
-            Чтобы получился процент: <b>${arrayNormYield[3] * 100}% </b><br><br>
-            <li> Провести собеседований: <b>${arrayNormYieldNonWaiting[0] - countInterwiew}</b> </li>
-            <li> Пригласить дальше: <b>${arrayNormYieldNonWaiting[1] - countInvite}</b> кандидата/кандидатов</li>
-            <li> Чтобы прошли СБ: <b>${arrayNormYieldNonWaiting[2] - countPaccedSecurity}</b> кандидата/кандидатов</li>
-        </ul>`
+        let temple1 = ''
+        let temple2 = ''
 
-        let temple3 = `<ul>
+        if (countWaiting == 0) {
+            temple1 = 
+            `<ul>
+                Чтобы получился процент: <b>${arrayCutoffYield[3] * 100}%: </b><br><br>
+                <li> Провести собеседований: <b>${arrayCutoffYieldNonWaiting[0] - countInterwiew}</b> </li>
+                <li> Пригласить дальше: <b>${arrayCutoffYieldNonWaiting[1] - countInvite}</b> кандидата/кандидатов</li>
+                <li> Чтобы <b>${arrayCutoffYieldNonWaiting[2] - countPaccedSecurity}</b> кандидата/кандидатов прошли СБ.</li>
+            </ul>`
+            temple2 = 
+            `<ul>
+                Чтобы получился процент: <b>${arrayNormYield[3] * 100}% </b><br><br>
+                <li> Провести собеседований: <b>${arrayNormYieldNonWaiting[0] - countInterwiew}</b> </li>
+                <li> Пригласить дальше: <b>${arrayNormYieldNonWaiting[1] - countInvite}</b> кандидата/кандидатов</li>
+                <li> Чтобы прошли СБ: <b>${arrayNormYieldNonWaiting[2] - countPaccedSecurity}</b> кандидата/кандидатов</li>
+            </ul>`
+        } else {
+            temple1 = 
+            `<ul>
+                Чтобы получился процент: <b>${arrayCutoffYieldNonWaiting[3] * 100}%:</b><br><br>
+                <li> Провести собеседований: <b>${arrayCutoffYield[0] - countInterwiew}</b> </li>
+                <li> Пригласить дальше: <b>${arrayCutoffYield[1] - countInvite}</b> кандидата/кандидатов</li>
+                <li> Чтобы прошли СБ: <b>${arrayCutoffYield[2] - countPaccedSecurity}</b> кандидата/кандидатов</li>
+                <li> Чтобы дошли ожидаемые: <b>${countWaiting}</b> кандидата/кандидатов</li>
+                <br>или<br><br>
+                Чтобы получился процент: <b>${arrayCutoffYield[3] * 100}%: </b><br><br>
+                <li> Провести собеседований: <b>${arrayCutoffYieldNonWaiting[0] - countInterwiew}</b> </li>
+                <li> Пригласить дальше: <b>${arrayCutoffYieldNonWaiting[1] - countInvite}</b> кандидата/кандидатов</li>
+                <li> Чтобы <b>${arrayCutoffYieldNonWaiting[2] - countPaccedSecurity}</b> кандидата/кандидатов прошли СБ.</li>
+            </ul>`
+            temple2 = 
+            `<ul>
+                Чтобы получился процент: <b>${arrayNormYieldNonWaiting[3] * 100}%:</b><br><br>
+                <li> Провести собеседований: <b>${arrayNormYield[0] - countInterwiew}</b> </li>
+                <li> Пригласить дальше: <b>${arrayNormYield[1] - countInvite}</b> кандидата/кандидатов</li>
+                <li> Чтобы <b>${arrayNormYield[2] - countPaccedSecurity}</b> кандидата/кандидатов прошли СБ</li>
+                <li> Чтобы дошли ожидаемые: <b>${countWaiting}</b> кандидата/кандидатов</li>
+                <br>или<br><br>
+                Чтобы получился процент: <b>${arrayNormYield[3] * 100}% </b><br><br>
+                <li> Провести собеседований: <b>${arrayNormYieldNonWaiting[0] - countInterwiew}</b> </li>
+                <li> Пригласить дальше: <b>${arrayNormYieldNonWaiting[1] - countInvite}</b> кандидата/кандидатов</li>
+                <li> Чтобы прошли СБ: <b>${arrayNormYieldNonWaiting[2] - countPaccedSecurity}</b> кандидата/кандидатов</li>
+            </ul>`
+        }
+
+        let temple3 = 
+        `<ul>
             Чтобы получился процент: <b>${arrayCutoffInvite[2] * 100}%</b><br><br>
             <li> Провести собеседований: <b>${arrayCutoffInvite[0] - countInterwiew}</b> </li>
-            <li> Пригласить дальше: <b>${arrayCutoffInvite[1] - countInvite}</b> кандидата/кандидатов</li>
-            
+            <li> Пригласить дальше: <b>${arrayCutoffInvite[1] - countInvite}</b> кандидата/кандидатов</li>  
         </ul>`
 
-        let temple4 = `<ul>
+        let temple4 = 
+        `<ul>
             Чтобы получился процент: <b>${arrayNormInvite[2] * 100}% </b><br><br>
             <li> Провести собеседований: <b>${arrayNormInvite[0] - countInterwiew}</b> </li>
             <li> Пригласить дальше: <b>${arrayNormInvite[1] - countInvite}</b> кандидата/кандидатов</li>
-            
         </ul>`
+        let currentPercentYield = 0
+        if (!arrayCutoffYield[4] == 0) {
+            currentPercentYield = arrayCutoffYield[4] * 100
+        }
+        let currentPercentInvite = parseInt(((countInvite/countInterwiew)*100).toFixed())
+        let temple5 = ''
+        if (countInterwiew === 0 && countInvite === 0 && countPaccedSecurity=== 0 && countIncome === 0 && countWaiting === 0)  {
+            temple5 = 
+            `Текущий процент доходимости: <b>0</b> % <br>
+            Текущий процент приглашаемости: <b>0</b> % <br>`
+        } else {
+            temple5 = 
+            `Текущий процент доходимости: <b>${currentPercentYield}</b> % <br>
+            Текущий процент приглашаемости: <b>${currentPercentInvite}</b> % <br>`
+        }
 
         document.getElementsByClassName('div_arrayCutoffYield')[0].innerHTML = temple1
         document.getElementsByClassName('div_arrayNormYield')[0].innerHTML = temple2
         document.getElementsByClassName('div_arrayCutoffInvite')[0].innerHTML = temple3
         document.getElementsByClassName('div_arrayNormInvite')[0].innerHTML = temple4
-        document.getElementsByClassName('container_values')[0].innerHTML = `Текущий процент доходимости: <b>${arrayCutoffYield[4] * 100}</b> % <br>Текущий процент приглашаемости: <b>${(parseFloat(parseInt(countInvite)/parseInt(countInterwiew)).toFixed(2)) * 100}</b> % <br>`
+        document.getElementsByClassName('container_values')[0].innerHTML = temple5
         document.getElementsByClassName('container')[0].className += ' container_visible'
         }
 }

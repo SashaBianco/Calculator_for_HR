@@ -50,10 +50,12 @@ body {
     font-size: 18px;
     text-transform: uppercase;
     cursor: pointer;
+    color: #fff;
+    background-color: #a793b9;
 }
 .button:hover {
-    background-color: #a793b9;
-    color: #fff;
+    opacity: 0.85;
+    
 }
 .container {
     display: none;

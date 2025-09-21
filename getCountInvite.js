@@ -89,7 +89,7 @@ function getValuesFromForm () {
         </ul>`
         let currentPercentYield = 0
         if (!arrayCutoffYield[4] == 0) {
-            currentPercentYield = arrayCutoffYield[4] * 100
+            currentPercentYield = (arrayCutoffYield[4] * 100).toFixed()
         }
         let currentPercentInvite = parseInt(((countInvite/countInterwiew)*100).toFixed())
         let temple5 = ''

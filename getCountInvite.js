@@ -13,64 +13,67 @@ function getValuesFromForm () {
     countIncome = parseInt(document.getElementById('income').value) //кол-во дошедших
     countWaiting = parseInt(document.getElementById('waiting').value) //кол-во ожидаемых
 
-
     if (isNaN(countInterwiew) || isNaN(countInvite) || isNaN(countPaccedSecurity)  || isNaN(countIncome)  || isNaN(countWaiting))  {
         console.log('Ошибка. Не заполнены все поля!')
         document.getElementsByClassName('container')[0].classList.remove('container_visible')
     } else {
+        let arrayCutoffYieldNonWaiting 
+        let arrayNormYieldNonWaiting
+        let temple1
+        let temple2
+
+        if (countWaiting > 0) {
+            arrayCutoffYieldNonWaiting = getNeedValuesYield(countInterwiew, countInvite, countPaccedSecurity, countIncome, 0, cutoffIncome) //отсечка доходимости без дошедших
+            arrayNormYieldNonWaiting = getNeedValuesYield(countInterwiew, countInvite, countPaccedSecurity, countIncome, 0, normIncome) //отсечка доходимости без дошедших
+        }
         let arrayCutoffYield = getNeedValuesYield(countInterwiew, countInvite, countPaccedSecurity, countIncome, countWaiting, cutoffIncome) //отсечка доходимости
         let arrayNormYield = getNeedValuesYield(countInterwiew, countInvite, countPaccedSecurity, countIncome, countWaiting, normIncome) //норма доходимости
-        let arrayCutoffYieldNonWaiting = getNeedValuesYield(countInterwiew, countInvite, countPaccedSecurity, countIncome, 0, cutoffIncome) //отсечка доходимости без дошедших
-        let arrayNormYieldNonWaiting = getNeedValuesYield(countInterwiew, countInvite, countPaccedSecurity, countIncome, 0, normIncome) //отсечка доходимости без дошедших
         let arrayCutoffInvite = getNeedValuesInvite(countInterwiew, countInvite, cutoffInvite) //отсечка приглашаемости
         let arrayNormInvite = getNeedValuesInvite(countInterwiew, countInvite, normInvite) //норма приглашаемости 
-        let temple1 = ''
-        let temple2 = ''
+        
+        if (countWaiting > 0) {
+            temple1 = `<ul>
+            Чтобы получился процент: <b>${arrayCutoffYield[3] * 100}%:</b><br><br>
+            <li> Провести собеседований: <b>${arrayCutoffYield[0] - countInterwiew}</b> </li>
+            <li> Пригласить дальше: <b>${arrayCutoffYield[1] - countInvite}</b> кандидата/кандидатов</li>
+            <li> Чтобы прошли СБ: <b>${arrayCutoffYield[2] - countPaccedSecurity}</b> кандидата/кандидатов</li>
+            <li> Чтобы дошли ожидаемые: <b>${countWaiting}</b> кандидата/кандидатов</li>
+            <br>или (если ожидаемые не дойдут)<br><br>
+            Чтобы получился процент: <b>${arrayCutoffYieldNonWaiting[3] * 100}%: </b><br><br>
+            <li> Провести собеседований: <b>${arrayCutoffYieldNonWaiting[0] - countInterwiew}</b> </li>
+            <li> Пригласить дальше: <b>${arrayCutoffYieldNonWaiting[1] - countInvite}</b> кандидата/кандидатов</li>
+            <li> Чтобы <b>${arrayCutoffYieldNonWaiting[2] - countPaccedSecurity}</b> кандидата/кандидатов прошли СБ.</li>
+            
+        </ul>`
+            temple2 = `<ul>
+            Чтобы получился процент: <b>${arrayNormYield[3] * 100}%:</b><br><br>
+            <li> Провести собеседований: <b>${arrayNormYield[0] - countInterwiew}</b> </li>
+            <li> Пригласить дальше: <b>${arrayNormYield[1] - countInvite}</b> кандидата/кандидатов</li>
+            <li> Чтобы <b>${arrayNormYield[2] - countPaccedSecurity}</b> кандидата/кандидатов прошли СБ</li>
+            <li> Чтобы дошли ожидаемые: <b>${countWaiting}</b> кандидата/кандидатов</li>
+            <br>или (если ожидаемые не дойдут)<br><br>
+            Чтобы получился процент: <b>${arrayNormYieldNonWaiting[3] * 100}% </b><br><br>
+            <li> Провести собеседований: <b>${arrayNormYieldNonWaiting[0] - countInterwiew}</b> </li>
+            <li> Пригласить дальше: <b>${arrayNormYieldNonWaiting[1] - countInvite}</b> кандидата/кандидатов</li>
+            <li> Чтобы прошли СБ: <b>${arrayNormYieldNonWaiting[2] - countPaccedSecurity}</b> кандидата/кандидатов</li>
+        </ul>`
 
-        if (countWaiting == 0) {
-            temple1 = 
-            `<ul>
-                Чтобы получился процент: <b>${arrayCutoffYield[3] * 100}%: </b><br><br>
-                <li> Провести собеседований: <b>${arrayCutoffYieldNonWaiting[0] - countInterwiew}</b> </li>
-                <li> Пригласить дальше: <b>${arrayCutoffYieldNonWaiting[1] - countInvite}</b> кандидата/кандидатов</li>
-                <li> Чтобы <b>${arrayCutoffYieldNonWaiting[2] - countPaccedSecurity}</b> кандидата/кандидатов прошли СБ.</li>
-            </ul>`
-            temple2 = 
-            `<ul>
-                Чтобы получился процент: <b>${arrayNormYield[3] * 100}% </b><br><br>
-                <li> Провести собеседований: <b>${arrayNormYieldNonWaiting[0] - countInterwiew}</b> </li>
-                <li> Пригласить дальше: <b>${arrayNormYieldNonWaiting[1] - countInvite}</b> кандидата/кандидатов</li>
-                <li> Чтобы прошли СБ: <b>${arrayNormYieldNonWaiting[2] - countPaccedSecurity}</b> кандидата/кандидатов</li>
-            </ul>`
         } else {
             temple1 = 
             `<ul>
-                Чтобы получился процент: <b>${arrayCutoffYieldNonWaiting[3] * 100}%:</b><br><br>
+                Чтобы получился процент: <b>${arrayCutoffYield[3] * 100}%:</b><br><br>
                 <li> Провести собеседований: <b>${arrayCutoffYield[0] - countInterwiew}</b> </li>
                 <li> Пригласить дальше: <b>${arrayCutoffYield[1] - countInvite}</b> кандидата/кандидатов</li>
-                <li> Чтобы прошли СБ: <b>${arrayCutoffYield[2] - countPaccedSecurity}</b> кандидата/кандидатов</li>
-                <li> Чтобы дошли ожидаемые: <b>${countWaiting}</b> кандидата/кандидатов</li>
-                <br>или<br><br>
-                Чтобы получился процент: <b>${arrayCutoffYield[3] * 100}%: </b><br><br>
-                <li> Провести собеседований: <b>${arrayCutoffYieldNonWaiting[0] - countInterwiew}</b> </li>
-                <li> Пригласить дальше: <b>${arrayCutoffYieldNonWaiting[1] - countInvite}</b> кандидата/кандидатов</li>
-                <li> Чтобы <b>${arrayCutoffYieldNonWaiting[2] - countPaccedSecurity}</b> кандидата/кандидатов прошли СБ.</li>
+                <li> Чтобы прошли СБ: <b>${arrayCutoffYield[2] - countPaccedSecurity}</b> кандидата/кандидатов</li>        
             </ul>`
-            temple2 = 
+        temple2 = 
             `<ul>
-                Чтобы получился процент: <b>${arrayNormYieldNonWaiting[3] * 100}%:</b><br><br>
+                Чтобы получился процент: <b>${arrayNormYield[3] * 100}%:</b><br><br>
                 <li> Провести собеседований: <b>${arrayNormYield[0] - countInterwiew}</b> </li>
                 <li> Пригласить дальше: <b>${arrayNormYield[1] - countInvite}</b> кандидата/кандидатов</li>
                 <li> Чтобы <b>${arrayNormYield[2] - countPaccedSecurity}</b> кандидата/кандидатов прошли СБ</li>
-                <li> Чтобы дошли ожидаемые: <b>${countWaiting}</b> кандидата/кандидатов</li>
-                <br>или<br><br>
-                Чтобы получился процент: <b>${arrayNormYield[3] * 100}% </b><br><br>
-                <li> Провести собеседований: <b>${arrayNormYieldNonWaiting[0] - countInterwiew}</b> </li>
-                <li> Пригласить дальше: <b>${arrayNormYieldNonWaiting[1] - countInvite}</b> кандидата/кандидатов</li>
-                <li> Чтобы прошли СБ: <b>${arrayNormYieldNonWaiting[2] - countPaccedSecurity}</b> кандидата/кандидатов</li>
             </ul>`
         }
-
         let temple3 = 
         `<ul>
             Чтобы получился процент: <b>${arrayCutoffInvite[2] * 100}%</b><br><br>
@@ -113,17 +116,16 @@ function getNeedValuesYield(interviews, invites, security, incomes, waitings, bo
     let people = parseInt(incomes) + parseInt(waitings)
     let percentage = parseFloat((people/parseInt(security)).toFixed(2))
     let percentageNOW = parseFloat((incomes/parseInt(security)).toFixed(2))
-    console.log(percentageNOW)
-    console.log(percentage)
     border = parseFloat(border)
 
     if (percentage >= border) {
+        //console.log("Процент больше границы: "+[interviews, invites, security, percentage, percentageNOW])
         return [interviews, invites, security, percentage, percentageNOW]
     } else {
         while (true) {
             percentage = parseFloat((people/security).toFixed(2))
             if (percentage >= border) {
-                console.log([interviews, invites, security, percentage, percentageNOW])
+                //console.log("Чтобы добраться до границы: "+[interviews, invites, security, percentage, percentageNOW])
                 return [interviews, invites, security, percentage, percentageNOW]
             } else {
                 interviews += 1
@@ -143,8 +145,6 @@ function getNeedValuesInvite(interviews, invites, border) {
     } else {
         while (true) {
             percentage = parseFloat((invites/interviews)).toFixed(2)
-            console.log(invites)
-            console.log(percentage)
             if (percentage >= border) {
                 return [interviews, invites, percentage]
             } else {
